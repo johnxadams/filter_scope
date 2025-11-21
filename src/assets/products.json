@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Zero-Gravity Headset",
+    "price": 299.99,
+    "category": "Audio",
+    "inStock": true
+  },
+  {
+    "id": 2,
+    "name": "Astro VR Glasses",
+    "price": 499.99,
+    "category": "Gadgets",
+    "inStock": false
+  },
+  {
+    "id": 3,
+    "name": "Orbit Drone 3000",
+    "price": 1299.95,
+    "category": "Drones",
+    "inStock": true
+  },
+  {
+    "id": 4,
+    "name": "Solar Panel Charger",
+    "price": 199.5,
+    "category": "Power",
+    "inStock": true
+  },
+  {
+    "id": 5,
+    "name": "Space Helmet Audio Adapter",
+    "price": 59.99,
+    "category": "Audio",
+    "inStock": false
+  },
+  {
+    "id": 6,
+    "name": "Comet-Probe Smartwatch",
+    "price": 399.0,
+    "category": "Wearables",
+    "inStock": true
+  },
+  {
+    "id": 7,
+    "name": "Lunar Light Desk Lamp",
+    "price": 89.95,
+    "category": "Home",
+    "inStock": true
+  },
+  {
+    "id": 8,
+    "name": "Galactic Noise Cancelling Earbuds",
+    "price": 149.99,
+    "category": "Audio",
+    "inStock": true
+  },
+  {
+    "id": 9,
+    "name": "Meteorite Bluetooth Speaker",
+    "price": 249.5,
+    "category": "Audio",
+    "inStock": false
+  },
+  {
+    "id": 10,
+    "name": "Starlight Keyboard",
+    "price": 129.99,
+    "category": "Gadgets",
+    "inStock": true
+  }
+]
