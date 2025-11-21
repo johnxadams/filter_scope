@@ -1,8 +1,7 @@
 <template>
   <div class="mb-4">
-    <label for="product-search" class="block text-sm font-medium text-gray-100">
-      Suche Produkte
-    </label>
+    <label for="product-search" class="block text-sm font-medium text-gray-100" />
+
     <input
       id="product-search"
       type="text"
