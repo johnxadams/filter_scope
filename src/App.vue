@@ -1,7 +1,10 @@
-<script setup></script>
-
 <template>
-  <main></main>
+  <main>
+    <ProductList />
+  </main>
 </template>
+<script setup>
+import ProductList from '@/components/ProductList.vue'
+</script>
 
 <style lang="scss" scoped></style>
