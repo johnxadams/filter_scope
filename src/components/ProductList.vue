@@ -2,6 +2,12 @@
   <section>
     <SearchBar v-model="searchQuery" />
     <Categories :categories="categories" v-model="selectedCategory" />
+    <StockFilter
+      v-model="stockAvailable"
+      label="Nur verfügbare Produkte"
+      onText="In Stock"
+      offText="Out of Stock"
+    />
 
     <div aria-live="polite" class="sr-only">{{ filteredProducts.length }} Produkte gefunden.</div>
     <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
@@ -10,11 +16,12 @@
   </section>
 </template>
 <script setup>
+import { onMounted, computed, ref } from 'vue'
+import { useProductStore } from '@/stores/productStore.js'
 import ProductListItem from './ProductListItem.vue'
 import SearchBar from './SearchBar.vue'
 import Categories from './Categories.vue'
-import { onMounted, computed, ref } from 'vue'
-import { useProductStore } from '@/stores/productStore.js'
+import StockFilter from './StockFilter.vue'
 
 const productStore = useProductStore()
 
@@ -32,6 +39,7 @@ const products = productStore.products
 // reactive searchValue & selectedCategory Value
 const searchQuery = ref('')
 const selectedCategory = ref('')
+const stockAvailable = ref('')
 
 const filteredProducts = computed(() => {
   const query = searchQuery.value.toLowerCase()
@@ -40,7 +48,16 @@ const filteredProducts = computed(() => {
   return products.filter((p) => {
     const namesFilter = p.name.toLowerCase().includes(query)
     const categoryFilter = category ? p.category === category : true
-    return namesFilter && categoryFilter
+
+    // a chain of ternary operators to handle the three states of stockAvailable -> '', 'true', 'false'
+    const inStockFilter =
+      stockAvailable.value === ''
+        ? true
+        : stockAvailable.value === 'true'
+          ? p.inStock === true
+          : p.inStock === false
+
+    return namesFilter && categoryFilter && inStockFilter
   })
 })
 

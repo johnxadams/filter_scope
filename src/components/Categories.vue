@@ -1,8 +1,6 @@
 <template>
   <div class="mb-4">
-    <label for="category-filter" class="block text-sm font-medium text-gray-100">
-      Kategorie filtern
-    </label>
+    <label for="category-filter" class="block text-sm font-medium text-black-100" />
 
     <select
       id="category-filter"
