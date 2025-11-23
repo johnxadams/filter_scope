@@ -3,10 +3,10 @@
     <button
       v-for="option in options"
       :key="option.value"
-      @click="select(option.value)"
+      @click="emit('update:modelValue', option.value)"
       :class="[
-        'px-4 py-2 text-sm md:text-base duration-450 cursor-pointer transition-colors text-white  backdrop-blur-lg hover:bg-black/10 ',
-        selected === option.value ? 'bg-black/10  ' : 'bg-white/10',
+        'px-4 py-2 text-sm md:text-base duration-450 cursor-pointer transition-colors text-white backdrop-blur-lg hover:bg-black/10',
+        modelValue === option.value ? 'bg-black/10' : 'bg-white/10',
       ]"
       role="radio"
       :aria-checked="selected === option.value"
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   modelValue: String,
@@ -26,18 +26,10 @@ const emit = defineEmits(['update:modelValue'])
 
 const selected = ref(props.modelValue || '')
 
+// Nice to have -> Produkte label mit pinia fetchen und dynamisch anzeigen
 const options = [
   { value: '', label: 'Alle Produkte' },
   { value: 'true', label: 'In Stock' },
   { value: 'false', label: 'Out of Stock' },
 ]
-
-const select = (value) => {
-  selected.value = value
-  // eslint-disable-next-line no-console
-  console.log('value   : ', value)
-  emit('update:modelValue', value)
-}
-
-watch(selected, (val) => emit('update:modelValue', val))
 </script>
