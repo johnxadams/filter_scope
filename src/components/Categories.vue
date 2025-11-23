@@ -8,7 +8,7 @@
       @keydown.up.exact.prevent="startArrowKeys"
       @keydown.down.exact.prevent="startArrowKeys"
       type="button"
-      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-white/10 px-4 py-2 text-sm md:text-base font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-white/20 transition-colors"
+      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-white/10 px-4 py-2 text-sm md:text-base font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/10 cursor-pointer transition-colors"
       aria-haspopup="listbox"
       :aria-expanded="open.toString()"
       :aria-controls="'dropdown-menu'"
