@@ -4,6 +4,7 @@
       <SearchBar v-model="searchQuery" />
       <Categories :categories="categories" v-model="selectedCategory" />
       <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+      <ResetFilter @reset="handleReset" />
     </fieldset>
     <div aria-live="polite" class="sr-only">{{ filteredProducts.length }} Produkte gefunden.</div>
 
@@ -19,6 +20,7 @@ import ProductListItem from './ProductListItem.vue'
 import SearchBar from './SearchBar.vue'
 import Categories from './Categories.vue'
 import StockFilter from './StockFilter.vue'
+import ResetFilter from './ResetFilter.vue'
 
 const productStore = useProductStore()
 
@@ -62,4 +64,10 @@ const categories = computed(() => {
   // make unique list of categories from products
   return [...new Set(productStore.products.map((p) => p.category))]
 })
+
+const handleReset = () => {
+  searchQuery.value = ''
+  selectedCategory.value = ''
+  stockAvailable.value = ''
+}
 </script>
