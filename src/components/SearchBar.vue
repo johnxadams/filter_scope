@@ -1,13 +1,11 @@
 <template>
   <div class="mb-4">
-    <label for="product-search" class="block text-sm font-medium text-gray-100" />
-
     <input
       id="product-search"
       type="text"
       v-model="searchQuery"
       placeholder="Search for name..."
-      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+      class="mt-1 block w-full md:max-w-1/2 text-sm md:text-base p-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
       aria-label="Produkt suchen"
       role="searchbox"
     />
