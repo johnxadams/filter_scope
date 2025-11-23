@@ -1,16 +1,13 @@
 <template>
   <section>
-    <SearchBar v-model="searchQuery" />
-    <Categories :categories="categories" v-model="selectedCategory" />
-    <StockFilter
-      v-model="stockAvailable"
-      label="Nur verfügbare Produkte"
-      onText="In Stock"
-      offText="Out of Stock"
-    />
-
+    <fieldset aria-label="Produktfilter" class="space-y-4 p-2 md:p-4">
+      <SearchBar v-model="searchQuery" />
+      <Categories :categories="categories" v-model="selectedCategory" />
+      <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+    </fieldset>
     <div aria-live="polite" class="sr-only">{{ filteredProducts.length }} Produkte gefunden.</div>
-    <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+
+    <ul role="list" class="grid gap-2 p-2 md:p-4 sm:grid-cols-2 lg:grid-cols-3 xl:col-span-2">
       <ProductListItem v-for="product in filteredProducts" :key="product.id" :product="product" />
     </ul>
   </section>

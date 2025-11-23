@@ -1,14 +1,12 @@
 <template>
-  <div class="flex gap-2 mb-4">
+  <div class="flex gap-2 mb-4" role="radiogroup" aria-label="Lagerbestand filtern">
     <button
       v-for="option in options"
       :key="option.value"
       @click="select(option.value)"
       :class="[
-        'px-4 py-2 rounded-md border transition-colors',
-        selected === option.value
-          ? 'bg-indigo-500 text-white border-indigo-500'
-          : 'bg-gray-800 text-gray-200 border-gray-600',
+        'px-4 py-2 text-sm md:text-base duration-450 cursor-pointer transition-colors text-white  backdrop-blur-lg hover:bg-black/10 ',
+        selected === option.value ? 'bg-black/10  ' : 'bg-white/10',
       ]"
       role="radio"
       :aria-checked="selected === option.value"
