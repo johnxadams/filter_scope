@@ -10,6 +10,7 @@
       />
       <div>
         <h3 class="text-base/7 font-semibold tracking-tight text-black">{{ product.name }}</h3>
+        <h3 class="text-base/7 font-semibold tracking-tight text-black">{{ product.price }}</h3>
 
         <!-- <p class="text-sm/6 font-semibold text-indigo-400">Co-Founder / CEO</p> -->
       </div>
