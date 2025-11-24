@@ -1,17 +1,30 @@
 <template>
   <section>
-    <fieldset aria-label="Produktfilter" class="space-y-4 p-2 md:p-4">
-      <SearchBar v-model="searchQuery" />
-      <Categories :categories="categories" v-model="selectedCategory" />
-      <PriceSort v-model="selectedSort" />
-      <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+    <fieldset
+      aria-label="Produktfilter"
+      class="flex items-center flex-col p-2 md:p-4 md:py-8 mb-1 bg-black/15 backdrop-blur-lg"
+    >
+      <!-- class="flex items-center m-4 flex-col space-y-4 p-2 md:p-4 mb-6 bg-black/5 backdrop-blur-lg" -->
+
+      <div class="w-full sm:w-8/10 md:w-[35rem]">
+        <SearchBar v-model="searchQuery" />
+      </div>
+      <div
+        class="flex w-full sm:w-[30rem] md:w-8/10 justify-center mb-2 mt-[-5px] md:mt-[2px] md:mb-4 flex-wrap gap-2 md:gap-4 md:flex-row"
+      >
+        <Categories :categories="categories" v-model="selectedCategory" />
+        <PriceSort v-model="selectedSort" />
+        <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+      </div>
       <ResetFilter @reset="handleReset" />
     </fieldset>
     <div aria-live="polite" class="sr-only">
       {{ filteredAndSortedProducts.length }} Produkte gefunden.
     </div>
-
-    <ul role="list" class="grid gap-2 p-2 md:p-4 sm:grid-cols-2 lg:grid-cols-3 xl:col-span-2">
+    <ul
+      role="list"
+      class="border-5 grid gap-2 p-2 md:p-4 sm:grid-cols-2 lg:grid-cols-3 xl:col-span-2"
+    >
       <ProductListItem
         v-for="product in filteredAndSortedProducts"
         :key="product.id"

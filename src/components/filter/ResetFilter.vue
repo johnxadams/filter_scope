@@ -4,7 +4,7 @@
     @keydown.enter.prevent="resetFilters"
     @keydown.space.prevent="resetFilters"
     type="button"
-    class="inline-flex items-center gap-x-2 px-4 py-2 text-sm md:text-base text-white bg-white/10 transition-colors hover:bg-black/10 active:bg-black/20 cursor-pointer"
+    class="inline-flex items-center w-auto gap-x-2 px-4 py-2 text-sm text-white bg-black/35 transition-colors hover:bg-black/45 active:bg-black/60 cursor-pointer"
     aria-label="Filter zurücksetzen"
   >
     <svg

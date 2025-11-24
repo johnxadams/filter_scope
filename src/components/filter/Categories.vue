@@ -3,8 +3,9 @@
     :modelValue="modelValue"
     @update:modelValue="$emit('update:modelValue', $event)"
     :dropdownOptions="categories"
-    defaultOption="All Categories"
-    placeholder="All Categories"
+    defaultOption="Alle Kategorien"
+    placeholder="Kategorien
+     auswählen"
     :accessLabel="'Kategorie Dropdown'"
   />
 </template>
