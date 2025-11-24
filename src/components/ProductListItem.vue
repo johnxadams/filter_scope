@@ -9,6 +9,11 @@
         class="size-16 rounded-full outline-1 -outline-offset-1 outline-white/10"
       />
       <div>
+        <span
+          v-if="!product.inStock"
+          class="inline-flex items-center rounded-md bg-gray-400/10 px-2 py-1 text-xs font-medium text-gray-400 inset-ring inset-ring-gray-400/20"
+          >Out of Stock</span
+        >
         <h3 class="text-base/7 font-semibold tracking-tight text-black">{{ product.name }}</h3>
         <h3 class="text-base/7 font-semibold tracking-tight text-black">{{ product.price }}</h3>
 
