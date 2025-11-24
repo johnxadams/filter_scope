@@ -1,8 +1,6 @@
 <template>
   <li>
-    <article
-      class="flex bg-gray-100 bg-white/10 backdrop-blur-lg items-center min-h-48 gap-x-6 border-gray-600 p-6"
-    >
+    <article class="flex bg-gray-100 bg-white/10 items-center min-h-48 gap-x-6 border-gray-600 p-6">
       <img
         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
         alt=""

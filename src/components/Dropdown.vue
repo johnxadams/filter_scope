@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdown" class="relative inline-block text-left w-full md:w-auto">
+  <div ref="dropdown" class="relative inline-block text-left w-full sm:w-[30rem] md:w-auto">
     <button
       @click="toggleVisibility"
       @keydown.space.exact.prevent="toggleVisibility"
@@ -8,7 +8,7 @@
       @keydown.up.exact.prevent="startArrowKeys"
       @keydown.down.exact.prevent="startArrowKeys"
       type="button"
-      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-white/10 px-4 py-2 text-sm md:text-base font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/10 cursor-pointer transition-colors"
+      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-black/30 px-4 py-2 text-sm font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/45 cursor-pointer transition-colors"
       aria-haspopup="listbox"
       :aria-expanded="open.toString()"
       :aria-controls="'dropdown-menu'"

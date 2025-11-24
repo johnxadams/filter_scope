@@ -3,9 +3,9 @@
     :modelValue="modelValue"
     @update:modelValue="$emit('update:modelValue', $event)"
     :dropdownOptions="sortOptions"
-    defaultOption="Default Order"
-    placeholder="Sort by Price"
-    :accessLabel="'Price Sort Dropdown'"
+    defaultOption="Standard Reihenfolge"
+    placeholder="Nach Preis sortieren"
+    :accessLabel="'Nach Preis sortieren Dropdown'"
   />
 </template>
 

@@ -1,4 +1,9 @@
 @import 'tailwindcss';
+* {
+  box-sizing: border-box;
+  /* font-size: 16px; */
+}
+
 body {
   background: linear-gradient(
     180deg,
@@ -9,4 +14,5 @@ body {
     rgba(255, 140, 148, 1) 100%
   );
   min-height: 100vh;
+  margin: 0;
 }
