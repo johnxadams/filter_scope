@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdown" class="relative inline-block text-left w-full md:w-auto">
+  <div ref="dropdown" class="relative inline-block text-left w-full sm:w-[30rem] md:w-auto z-50">
     <button
       @click="toggleVisibility"
       @keydown.space.exact.prevent="toggleVisibility"
@@ -8,12 +8,13 @@
       @keydown.up.exact.prevent="startArrowKeys"
       @keydown.down.exact.prevent="startArrowKeys"
       type="button"
-      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-white/10 px-4 py-2 text-sm md:text-base font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-white/20 transition-colors"
+      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-black/30 px-4 py-2 text-sm font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/45 cursor-pointer transition-colors"
       aria-haspopup="listbox"
       :aria-expanded="open.toString()"
       :aria-controls="'dropdown-menu'"
+      :aria-label="accessLabel"
     >
-      {{ selectedLabel }}
+      {{ placeholder || displayLabel }}
       <svg
         viewBox="0 0 20 20"
         fill="currentColor"
@@ -32,41 +33,42 @@
       <ul
         v-if="open"
         id="dropdown-menu"
-        ref="dropdownCategories"
+        ref="dropdownList"
         role="listbox"
         tabindex="-1"
-        class="absolute left-0 mt-2 w-56 origin-top-right bg-gray-800 shadow-lg outline outline-1 outline-white/10 py-1 z-20"
+        class="absolute left-0 mt-2 w-56 origin-top-right bg-gray-800 shadow-lg outline outline-1 outline-white/10 py-1 z-50"
       >
         <li
+          v-if="defaultOption"
           ref="firstItem"
-          class="px-4 py-2 text-sm md:text-base text-gray-200 cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
+          class="px-4 py-2 text-sm text-gray-200 cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
           role="option"
           tabindex="0"
-          @click="emitUpdatedCategorie('')"
-          @keydown.enter.prevent="emitUpdatedCategorie('')"
-          @keydown.space.prevent="emitUpdatedCategorie('')"
+          @click="emitSelectedOption('')"
+          @keydown.enter.prevent="emitSelectedOption('')"
+          @keydown.space.prevent="emitSelectedOption('')"
           @keydown.esc.exact.prevent="hideDropdown"
           @keydown.down.prevent="focusNextItem"
           @keydown.up.prevent="focusPreviousItem"
         >
-          All Categories
+          {{ defaultOption }}
         </li>
 
         <li
-          v-for="(cat, index) in categories"
+          v-for="(option, index) in dropdownOptions"
           role="option"
           tabindex="0"
-          :key="cat"
-          class="px-4 py-2 text-sm text-gray-200 cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
-          @click="emitUpdatedCategorie(cat)"
-          @keydown.enter.prevent="emitUpdatedCategorie(cat)"
-          @keydown.space.prevent="emitUpdatedCategorie(cat)"
+          :key="option"
+          class="px-4 py-2 text-sm text-gray-200 bg-black cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none z-50"
+          @click="emitSelectedOption(option)"
+          @keydown.enter.prevent="emitSelectedOption(option)"
+          @keydown.space.prevent="emitSelectedOption(option)"
           @keydown.esc.exact.prevent="hideDropdown"
           @keydown.down.prevent="focusNextItem"
           @keydown.up.prevent="focusPreviousItem"
-          @keydown.tab.exact="index === categories.length - 1 ? hideDropdown() : null"
+          @keydown.tab.exact="index === dropdownOptions.length - 1 ? hideDropdown() : null"
         >
-          {{ cat }}
+          {{ option }}
         </li>
       </ul>
     </transition>
@@ -78,7 +80,22 @@ import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 
 const props = defineProps({
   modelValue: String,
-  categories: Array,
+  dropdownOptions: {
+    type: Array,
+    required: true,
+  },
+  defaultOption: {
+    type: String,
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: 'Select an option',
+  },
+  accessLabel: {
+    type: String,
+    default: 'Dropdown Menu',
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -86,7 +103,15 @@ const emit = defineEmits(['update:modelValue'])
 const open = ref(false)
 const dropdown = ref(null)
 const firstItem = ref(null)
-const dropdownCategories = ref(null)
+const dropdownList = ref(null)
+
+// shows me selected value or placeholder - DEfault Option
+const displayLabel = computed(() => {
+  if (props.modelValue === '' || !props.modelValue) {
+    return props.defaultOption || props.placeholder
+  }
+  return props.modelValue
+})
 
 // Toggle dropdown visibility
 const toggleVisibility = () => {
@@ -137,14 +162,14 @@ const handleClickOutside = (event) => {
   }
 }
 // Emit selected category and close dropdown
-const emitUpdatedCategorie = (value) => {
+const emitSelectedOption = (value) => {
   emit('update:modelValue', value)
   open.value = false
 }
 // get selected label
-const selectedLabel = computed(() =>
-  props.modelValue === '' ? 'All Categories' : props.modelValue,
-)
+// const selectedLabel = computed(() =>
+//   props.modelValue === '' ? 'All Categories' : props.modelValue,
+// )
 // Escape key to handel close dropdown
 function handleKey(e) {
   if (!open.value) return

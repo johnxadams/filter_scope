@@ -23,7 +23,7 @@
   {
     "id": 4,
     "name": "Solar Panel Charger",
-    "price": 199.5,
+    "price": 199.95,
     "category": "Power",
     "inStock": true
   },
@@ -37,7 +37,7 @@
   {
     "id": 6,
     "name": "Comet-Probe Smartwatch",
-    "price": 399.0,
+    "price": 399,
     "category": "Wearables",
     "inStock": true
   },
@@ -58,7 +58,7 @@
   {
     "id": 9,
     "name": "Meteorite Bluetooth Speaker",
-    "price": 249.5,
+    "price": 249.95,
     "category": "Audio",
     "inStock": false
   },

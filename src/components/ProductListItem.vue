@@ -1,17 +1,30 @@
 <template>
-  <li>
+  <li role="listitem">
     <article
-      class="flex bg-gray-100 bg-white/10 backdrop-blur-lg items-center min-h-48 gap-x-6 border-gray-600 p-6"
+      class="article-aspect flex aspect-[4/3] flex-col bg-white/20 gap-x-6 border-gray-600 p-2 pt-1 inset-ring inset-ring-gray-800/20 z-0"
+      tabindex="0"
     >
-      <img
-        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-        alt=""
-        class="size-16 rounded-full outline-1 -outline-offset-1 outline-white/10"
-      />
-      <div>
-        <h3 class="text-base/7 font-semibold tracking-tight text-black">{{ product.name }}</h3>
-
-        <!-- <p class="text-sm/6 font-semibold text-indigo-400">Co-Founder / CEO</p> -->
+      <div class="h-6 flex items-end justify-end">
+        <span
+          v-if="!product.inStock"
+          class="px-2 py-0.5 text-[9px] text-red-400 inset-ring inset-ring-gray-400/20"
+          tabindex="0"
+        >
+          Out of Stock
+        </span>
+      </div>
+      <div
+        class="price-name-container mt-3 h-30 sm:mt-15 sm:h-40 w-full flex justify-between flex-col items-center"
+      >
+        <p
+          class="font-sans text-xl sm:text-4xl font-thin mb-4 sm:mb-12 subpixel-antialiased"
+          tabindex="0"
+        >
+          € {{ product.price }}
+        </p>
+        <p class="text-xs sm:text-sm font-extralight text-black" tabindex="0">
+          {{ product.name }}
+        </p>
       </div>
     </article>
   </li>
@@ -25,3 +38,16 @@ defineProps({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+@media (max-width: 395px) {
+  .article-aspect {
+    height: 10rem;
+  }
+}
+@media (max-width: 466px) {
+  .article-aspect {
+    width: 100%;
+  }
+}
+</style>

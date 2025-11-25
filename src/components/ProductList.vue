@@ -1,24 +1,49 @@
 <template>
   <section>
-    <fieldset aria-label="Produktfilter" class="space-y-4 p-2 md:p-4">
-      <SearchBar v-model="searchQuery" />
-      <Categories :categories="categories" v-model="selectedCategory" />
-      <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
-    </fieldset>
-    <div aria-live="polite" class="sr-only">{{ filteredProducts.length }} Produkte gefunden.</div>
+    <fieldset
+      aria-label="Produktfilter"
+      class="flex items-center flex-col p-2 md:p-4 md:py-8 mb-1 bg-black/15 backdrop-blur-lg"
+    >
+      <!-- class="flex items-center m-4 flex-col space-y-4 p-2 md:p-4 mb-6 bg-black/5 backdrop-blur-lg" -->
 
-    <ul role="list" class="grid gap-2 p-2 md:p-4 sm:grid-cols-2 lg:grid-cols-3 xl:col-span-2">
-      <ProductListItem v-for="product in filteredProducts" :key="product.id" :product="product" />
+      <div class="w-full sm:w-8/10 md:w-[35rem]">
+        <SearchBar v-model="searchQuery" />
+      </div>
+      <div
+        class="flex w-full sm:w-[30rem] md:w-8/10 justify-center mb-2 mt-[-5px] md:mt-[2px] md:mb-4 flex-wrap gap-2 md:gap-4 md:flex-row"
+      >
+        <Categories :categories="categories" v-model="selectedCategory" />
+        <PriceSort v-model="selectedSort" />
+        <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+      </div>
+      <ResetFilter @reset="handleReset" />
+    </fieldset>
+    <div aria-live="polite" class="sr-only">
+      {{ filteredAndSortedProducts.length }} Produkte gefunden.
+    </div>
+    <ul
+      role="list"
+      tabindex="0"
+      class="grid gap-2 p-2 md:p-4 grid-cols-2 lg:mx-[5rem] md:grid-cols-3 xl:grid-cols-4 xl:col-span-2"
+    >
+      <ProductListItem
+        v-for="product in filteredAndSortedProducts"
+        :key="product.id"
+        :product="product"
+      />
     </ul>
   </section>
 </template>
 <script setup>
 import { onMounted, computed, ref } from 'vue'
 import { useProductStore } from '@/stores/productStore.js'
+import { sortProductsByPrice } from '@/utils/sortProductsHelper.js'
 import ProductListItem from './ProductListItem.vue'
-import SearchBar from './SearchBar.vue'
-import Categories from './Categories.vue'
-import StockFilter from './StockFilter.vue'
+import SearchBar from '@/components/filter/SearchBar.vue'
+import Categories from '@/components/filter/Categories.vue'
+import PriceSort from '@/components/filter/PriceSort.vue'
+import StockFilter from '@/components/filter/StockFilter.vue'
+import ResetFilter from '@/components/filter/ResetFilter.vue'
 
 const productStore = useProductStore()
 
@@ -33,16 +58,18 @@ onMounted(() => {
 
 const products = productStore.products
 
-// reactive searchValue & selectedCategory Value
+// reactive filter states
 const searchQuery = ref('')
 const selectedCategory = ref('')
 const stockAvailable = ref('')
+const selectedSort = ref('')
 
-const filteredProducts = computed(() => {
+const filteredAndSortedProducts = computed(() => {
   const query = searchQuery.value.toLowerCase()
   const category = selectedCategory.value
-  // filter products based on search query && selected category
-  return products.filter((p) => {
+
+  // filter products based on search query && selected category && stockFilter
+  const filtered = products.filter((p) => {
     const namesFilter = p.name.toLowerCase().includes(query)
     const categoryFilter = category ? p.category === category : true
 
@@ -56,10 +83,20 @@ const filteredProducts = computed(() => {
 
     return namesFilter && categoryFilter && inStockFilter
   })
+
+  // price sortieren
+  return sortProductsByPrice(filtered, selectedSort.value)
 })
 
 const categories = computed(() => {
   // make unique list of categories from products
   return [...new Set(productStore.products.map((p) => p.category))]
 })
+
+const handleReset = () => {
+  searchQuery.value = ''
+  selectedCategory.value = ''
+  stockAvailable.value = ''
+  selectedSort.value = ''
+}
 </script>

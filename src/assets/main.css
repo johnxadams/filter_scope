@@ -1,4 +1,11 @@
 @import 'tailwindcss';
+* {
+  box-sizing: border-box;
+  /* font-size: 16px; */
+  scrollbar-width: thin; /* dünner Scrollbar */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Scrollbar color */
+}
+
 body {
   background: linear-gradient(
     180deg,
@@ -8,5 +15,32 @@ body {
     rgba(255, 170, 166, 1) 65%,
     rgba(255, 140, 148, 1) 100%
   );
-  min-height: 100vh;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
+  margin: 0;
+}
+
+/* Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    #a1d4c2 0%,
+    rgba(220, 237, 194, 1) 35%,
+    rgba(255, 211, 181, 1) 50%,
+    rgba(255, 170, 166, 1) 65%,
+    rgba(255, 140, 148, 1) 100%
+  );
+}
+
+/* bewegliche scrollbalken*/
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }
