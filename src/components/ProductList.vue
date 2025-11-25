@@ -24,7 +24,7 @@
     <ul
       role="list"
       tabindex="0"
-      class="border-9 grid gap-2 p-2 md:p-4 grid-cols-2 lg:mx-[5rem] md:grid-cols-3 lg:grid-cols-4 xl:col-span-2"
+      class="grid gap-2 p-2 md:p-4 grid-cols-2 lg:mx-[5rem] md:grid-cols-3 xl:grid-cols-4 xl:col-span-2"
     >
       <ProductListItem
         v-for="product in filteredAndSortedProducts"

@@ -1,5 +1,5 @@
 <template>
-  <div ref="dropdown" class="relative inline-block text-left w-full sm:w-[30rem] md:w-auto">
+  <div ref="dropdown" class="relative inline-block text-left w-full sm:w-[30rem] md:w-auto z-50">
     <button
       @click="toggleVisibility"
       @keydown.space.exact.prevent="toggleVisibility"
@@ -36,7 +36,7 @@
         ref="dropdownList"
         role="listbox"
         tabindex="-1"
-        class="absolute left-0 mt-2 w-56 origin-top-right bg-gray-800 shadow-lg outline outline-1 outline-white/10 py-1 z-20"
+        class="absolute left-0 mt-2 w-56 origin-top-right bg-gray-800 shadow-lg outline outline-1 outline-white/10 py-1 z-50"
       >
         <li
           v-if="defaultOption"
@@ -59,7 +59,7 @@
           role="option"
           tabindex="0"
           :key="option"
-          class="px-4 py-2 text-sm text-gray-200 cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
+          class="px-4 py-2 text-sm text-gray-200 bg-black cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none z-50"
           @click="emitSelectedOption(option)"
           @keydown.enter.prevent="emitSelectedOption(option)"
           @keydown.space.prevent="emitSelectedOption(option)"
