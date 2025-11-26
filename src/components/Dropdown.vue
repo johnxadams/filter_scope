@@ -39,7 +39,7 @@
         <li
           v-if="defaultOption"
           ref="firstItem"
-          class="px-4 py-2 text-sm text-gray-200 cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
+          class="px-4 py-2 text-sm text-gray-200 bg-black cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
           role="option"
           tabindex="0"
           @click="emitSelectedOption('')"
@@ -118,6 +118,15 @@ const toggleVisibility = () => {
 
 // focus next and previous items
 const focusNextItem = (event) => {
+  const current = event.target
+  const listItems = dropdown.value.querySelectorAll('li')
+
+  // if we're the last item, go to the first @keydown-down
+  if (current === listItems[listItems.length - 1]) {
+    listItems[0]?.focus()
+    return
+  }
+
   const nextElement = event.target.nextElementSibling
   if (nextElement && nextElement.tagName === 'LI') {
     nextElement.focus()
@@ -125,6 +134,15 @@ const focusNextItem = (event) => {
 }
 
 const focusPreviousItem = (event) => {
+  const current = event.target
+
+  // If i'm on' first item, loop back to the last on @keydown-up
+  if (current === firstItem.value) {
+    const listItems = dropdown.value.querySelectorAll('li')
+    const lastItem = listItems[listItems.length - 1]
+    lastItem?.focus()
+    return
+  }
   const prevElement = event.target.previousElementSibling
   if (prevElement && prevElement.tagName === 'LI') {
     prevElement.focus()
