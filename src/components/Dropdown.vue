@@ -161,24 +161,13 @@ const emitSelectedOption = (value) => {
   toggleVisibility()
 }
 
-// Escape key to handel close dropdown
-function handleKey(e) {
-  if (!open.value) return
-
-  if (e.key === 'Escape') {
-    open.value = false
-  }
-}
-
 // Add and remove event listeners of keydown and clickOutside
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  document.addEventListener('keydown', handleKey)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
-  document.removeEventListener('keydown', handleKey)
 })
 </script>
 
