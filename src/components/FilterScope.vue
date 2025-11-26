@@ -1,9 +1,6 @@
 <template>
   <section>
-    <fieldset
-      aria-label="Produktfilter"
-      class="flex items-center flex-col p-2 md:p-4 md:py-8 mb-1 bg-black/15 backdrop-blur-lg"
-    >
+    <fieldset aria-label="Produktfilter" class="flex items-center flex-col p-2 md:p-4 md:py-8 mb-1">
       <!-- class="flex items-center m-4 flex-col space-y-4 p-2 md:p-4 mb-6 bg-black/5 backdrop-blur-lg" -->
 
       <div class="w-full sm:w-8/10 md:w-[35rem]">
@@ -14,7 +11,7 @@
       >
         <Categories :categories="categories" v-model="selectedCategory" />
         <PriceSort v-model="selectedSort" />
-        <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+        <StockFilter v-model="stockAvailable" />
       </div>
       <ResetFilter @reset="handleReset" />
     </fieldset>
@@ -48,12 +45,11 @@ import ResetFilter from '@/components/filter/ResetFilter.vue'
 const productStore = useProductStore()
 
 onMounted(() => {
-  // Redundant - not a real API call
-  if (typeof productStore.fetchProducts === 'function') {
-    productStore.fetchProducts()
-
-    return
-  }
+  // Redundant - not a real API call but yea
+  // if (typeof productStore.fetchProducts === 'function') {
+  //   productStore.fetchProducts()
+  //   return
+  // }
 })
 
 const products = productStore.products

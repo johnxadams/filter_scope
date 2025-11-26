@@ -29,7 +29,7 @@ const selected = ref(props.modelValue || '')
 // Nice to have -> Produkte label mit pinia fetchen und dynamisch anzeigen
 const options = [
   { value: '', label: 'Alle Produkte' },
-  { value: 'true', label: 'In Stock' },
-  { value: 'false', label: 'Out of Stock' },
+  { value: 'true', label: 'Verfügbar' },
+  { value: 'false', label: 'Kein Bestand' },
 ]
 </script>

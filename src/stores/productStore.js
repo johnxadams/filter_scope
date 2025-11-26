@@ -8,11 +8,11 @@ export const useProductStore = defineStore('productStore', {
   }),
   actions: {
     fetchProducts() {
-      this.products = productsData
+      // this.products = productsData
     },
   },
   getters: {
-    allProducts: (state) => state.products,
-    productCount: (state) => state.products.length,
+    // allProducts: (state) => state.products,
+    // productCount: (state) => state.products.length,
   },
 })

@@ -10,7 +10,7 @@
           class="px-2 py-0.5 text-[9px] text-red-400 inset-ring inset-ring-gray-400/20"
           tabindex="0"
         >
-          Out of Stock
+          Nicht verfügbar
         </span>
       </div>
       <div
