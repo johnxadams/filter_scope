@@ -11,7 +11,7 @@
       >
         <Categories :categories="categories" v-model="selectedCategory" />
         <PriceSort v-model="selectedSort" />
-        <StockFilter v-model="stockAvailable" />
+        <StockFilter v-model="stockAvailability" />
       </div>
       <ResetFilter @reset="handleReset" />
     </fieldset>
@@ -57,7 +57,7 @@ const products = productStore.products
 // reactive filter states
 const searchQuery = ref('')
 const selectedCategory = ref('')
-const stockAvailable = ref('')
+const stockAvailability = ref('')
 const selectedSort = ref('')
 
 const filteredAndSortedProducts = computed(() => {
@@ -69,11 +69,11 @@ const filteredAndSortedProducts = computed(() => {
     const namesFilter = p.name.toLowerCase().includes(query)
     const categoryFilter = category ? p.category === category : true
 
-    // a chain of ternary operators to handle the three states of stockAvailable -> '', 'true', 'false'
+    // a chain of ternary operators to handle the three states of stockAvailability -> '', 'true', 'false'
     const inStockFilter =
-      stockAvailable.value === ''
+      stockAvailability.value === ''
         ? true
-        : stockAvailable.value === 'true'
+        : stockAvailability.value === 'true'
           ? p.inStock === true
           : p.inStock === false
 
@@ -92,7 +92,7 @@ const categories = computed(() => {
 const handleReset = () => {
   searchQuery.value = ''
   selectedCategory.value = ''
-  stockAvailable.value = ''
+  stockAvailability.value = ''
   selectedSort.value = ''
 }
 </script>
