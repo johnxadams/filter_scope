@@ -1,8 +1,7 @@
 <template>
-  <!-- @update:modelValue="$emit('update:modelValue', $event)" -->
   <Dropdown
     :modelValue="modelValue"
-    @update:modelValue="handleUpdate"
+    @update:modelValue="$emit('update:modelValue', $event)"
     :dropdownOptions="categories"
     defaultOption="Alle Kategorien"
     :accessLabel="'Kategorie Dropdown'"
@@ -13,7 +12,6 @@
 
 <script setup>
 import Dropdown from '@/components/Dropdown.vue'
-import { onMounted, computed, ref } from 'vue'
 
 const props = defineProps({
   modelValue: String,
@@ -23,16 +21,5 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
-
-function handleUpdate(value) {
-  console.log('Selected in Categories.vue:', value)
-  // eslint-disable-next-line no-console
-  console.log('props.modelValue   : ', props.modelValue)
-  emit('update:modelValue', value)
-}
-
-onMounted(() => {
-  console.log('Categories.vue mounted with categories:', props.categories)
-})
+defineEmits(['update:modelValue'])
 </script>
