@@ -92,10 +92,21 @@
 - `ref="dropdown"` gibt mir zugriff auf root-Element des Dropdowns
 - Prüfe ob element existiert und ob der Klick außerhalb des Dropdowns war
 - Wenn das der Fall ist - Schließe Dropdown
+- Event wird gerufen in `onMounted`
+
+### 5. `focusNextItem()` gerufen durch Pfeiltaste ⬇
+
+- Wenn wir uns bei der letzten `òption` befinden, gehe zum ersten `<li>`
+- Ansonsten fokussiere immer den nächsten `<li>`
+
+### 6. `focusPreviousItem()` gerufen durch Pfeiltaste ⬆
+
+- Wenn wir uns bei der ersten `òption` befinden, gehe zum letzten `<li>`
+- Ansonsten fokussiere immer den vorherigen `<li>`
 
 <br>
 
-#### Accessability Handler
+#### Accessability Handler in `Dropdown.vue`
 
 `<button>`
 
@@ -106,3 +117,19 @@
 - `:aria-expanded="open.toString()"` -> Screenreader erwartet ein Boolean welcher sagt ob Dropdown.open true oder false ist.
 - `:aria-controls="'dropdown-menu'"` -> verknüft `<button>` mit dem `<ul>` Element, welche `dropdown-menu` als id trägt.
 - `:aria-label="accessLabel"` -> accessLabel ist ein props welcher sagt um welchen Dropdown es sich handelt, e.g. Kategorie oder Price Sort Dropdown
+
+<br>
+
+`<li-defaultOption>` and `<li-dropdownOption>`
+
+- select option using ENTER `@keydown.enter.prevent="emitSelectedOption('')"`
+- select option using SPACE `@keydown.space.prevent="emitSelectedOption('')"`
+- close dropdown with ESC `@keydown.esc.exact.prevent="toggleVisibility"`
+- focus next Item with DOWN `@keydown.down.prevent="focusNextItem"`
+- focus previous Item with UP `@keydown.up.prevent="focusPreviousItem"`
+
+only `<li> dropdownOption`
+
+- hide dropdown with tab - if we're on the last Item `@keydown.tab.exact="index === dropdownOptions.length - 1 ? toggleVisibility() : null"`
+
+<br>
