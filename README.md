@@ -42,6 +42,7 @@
 ## ProductListeItem.vue
 
 - Empfange product als props und Rendere jede einzelne Card
+- "Nicht Verfügbar" BADGE darstellung durch `v-if="!product.inStock"`
 
 <br>
 <br>
@@ -54,7 +55,7 @@
 
 <br>
 
-## SearchBar.vue
+## I. SearchBar.vue
 
 ### Vue Model Magic
 
@@ -68,9 +69,9 @@
 
 4. ein setTimeout function for performance
 
-## Dropdown.vue
+## II. Dropdown.vue
 
-### Wiederverwendbare Dropdown Component
+Wiederverwendbare Dropdown Component
 
 ### 1. `toggleVisibility()`
 
@@ -133,3 +134,43 @@ only `<li> dropdownOption`
 - hide dropdown with tab - if we're on the last Item `@keydown.tab.exact="index === dropdownOptions.length - 1 ? toggleVisibility() : null"`
 
 <br>
+
+## III. Categories.vue & PriceSort.vue
+
+Erbt die Funktionalität des Dropdown.vue, und dienen Durchreiche von Props und Emit
+
+### 1. `Categories.vue`
+
+- Als childComponent - empfängt es als props, die Array ausgabe des computed categories()
+- Und gibt zurück, das v-model selectedCategory, was uns hilft in der Filterung function
+
+### 3. `PriceSort.vue`
+
+- Als parentComponent - gibt er die hand written dropdownOption als Array an Dropdown.vue
+- Als childComponent gibt es zurück, das v-model selectedSort, was uns hilft in der Filterung function
+
+## IV. StockFilter.vue
+
+Eine barrierefreie Radio-Button-Gruppen `role="radiogroup"` präsentieren, um Produkte nach Lagerbestand zu filtern
+
+### Filter optionen
+
+- Alle Produkte
+- Verfügbar
+- Kein Bestand
+
+Emittet wird option.value, `'emptyString', true, false`, was dem inStock value des product.JSON entspricht.
+Im Parent wird der Wert in stockAvailability gespeichert und weiter im der `filteredAndSortedProducts` computed function geprocceessed mit tenary Operator.
+
+Wenn stockAvailability ein emptyString ist, return true, ansonsten wenn stockAvailability true ist, return p.inStock === true für nur verfügbare Produkte, und letztlich wenn nichts der oberen zutrifft, return p.inStock === false, für Produkte ohne Bestand.
+
+<pre>
+   const inStockFilter = stockAvailability.value === '' ? true
+                       : stockAvailability.value === 'true' ? p.inStock === true
+                       : p.inStock === false
+</pre>
+
+## V. ResetFilter.vue
+
+- Emit feuer reset zum Parent von wo aus alles States zurückgesetzt werden im `handleReset()`
+- Button auch accessable durch SPACE and ENTER
