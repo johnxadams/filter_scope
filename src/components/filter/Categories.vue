@@ -4,16 +4,16 @@
     @update:modelValue="$emit('update:modelValue', $event)"
     :dropdownOptions="categories"
     defaultOption="Alle Kategorien"
-    placeholder="Kategorien
-     auswählen"
     :accessLabel="'Kategorie Dropdown'"
+    placeholder="Kategorien
+      auswählen"
   />
 </template>
 
 <script setup>
 import Dropdown from '@/components/Dropdown.vue'
 
-defineProps({
+const props = defineProps({
   modelValue: String,
   categories: {
     type: Array,

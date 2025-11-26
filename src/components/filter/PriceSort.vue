@@ -19,5 +19,5 @@ defineProps({
 defineEmits(['update:modelValue'])
 
 // Sort options für das Dropdown
-const sortOptions = ['Price: Low to High', 'Price: High to Low']
+const sortOptions = ['Price: Aufsteigend', 'Price: Absteigend']
 </script>
