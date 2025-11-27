@@ -10,20 +10,20 @@
 
 ### 1. `productStore.products`
 
-- lokaleJSJON Data holen hier von Pinia
+- lokaleJSON Data mit dem PiniaStore fetchen, im FilterScope importieren und anwenden
 
 ### 2. `filteredAndSortedProducts()`
 
 - Alle emitten Werte die zur Filterung dienen werden hierin bearbeitet
   - `namesFilter` SearchQuery filterung nach Namen
 
-  - `categoryFilter` Boolean ob und welcher p.category dem emitWert entspricht
+  - `categoryFilter` Boolean ob und welcher p.category dem emitWert aus dem Dropdown-component entspricht
   - `inStockFilter` eine Vekettung von Tenary Operator um dem inStock Wert zu filtern
     - `stockAvailable -> '', 'true', 'false'`
 
   - `sortProductsByPrice(A, B)` outsorced Function im sortProductsHelper. Sortiert Produkte Aufsteigen, Absteigend und Default
-    - A Param - Array der bisherigenFilterung (names, category, inStock)
-    - B Param - ausgewählte Sortierung
+    - Parameter A - `[Array]` Ergebnis der bisherigenFilterung (names, category, inStock)
+    - Parameter B - ausgewählte Sortierung (aufsteigend, absteigend, default)
 
 ### 3. `categories()`
 
