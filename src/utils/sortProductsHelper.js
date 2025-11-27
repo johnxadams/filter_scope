@@ -1,7 +1,7 @@
 /**
  * Sortiert Produkte nach Preis
  * 1param products - Array von Produkten
- * 2param sortOrder - 'Price: Low to High' oder 'Price: High to Low' oder ''
+ * 2param sortOrder - 'Price: Aufsteigend' oder 'Price: Absteigend' oder ''
  * returns {Array} - Sortiertes Array
  */
 
@@ -14,11 +14,11 @@ export function sortProductsByPrice(products, sortOrder) {
   // Erstelle Kopie, um ogProduct nicht zu mutieren
   const sortedProducts = [...products]
 
-  if (sortOrder === 'Price: Low to High') {
+  if (sortOrder === 'Price: Aufsteigend') {
     return sortedProducts.sort((a, b) => a.price - b.price)
   }
 
-  if (sortOrder === 'Price: High to Low') {
+  if (sortOrder === 'Price: Absteigend') {
     return sortedProducts.sort((a, b) => b.price - a.price)
   }
 

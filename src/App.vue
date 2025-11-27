@@ -1,10 +1,10 @@
 <template>
   <main>
-    <ProductList />
+    <FilterScope />
   </main>
 </template>
 <script setup>
-import ProductList from '@/components/ProductList.vue'
+import FilterScope from '@/components/FilterScope.vue'
 </script>
 
 <style lang="scss" scoped></style>

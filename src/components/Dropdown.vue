@@ -3,18 +3,16 @@
     <button
       @click="toggleVisibility"
       @keydown.space.exact.prevent="toggleVisibility"
-      @keydown.esc.exact.prevent="hideDropdown"
-      @keydown.shift.tab="hideDropdown"
-      @keydown.up.exact.prevent="startArrowKeys"
-      @keydown.down.exact.prevent="startArrowKeys"
+      @keydown.esc.exact.prevent="toggleVisibility"
+      @keydown.shift.tab="toggleVisibility"
       type="button"
-      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-black/30 px-4 py-2 text-sm font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/45 cursor-pointer transition-colors"
+      class="inline-flex w-full md:w-[13rem] justify-between items-center gap-x-1.5 bg-black/30 px-4 py-2 text-sm font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/45 cursor-pointer transition-colors"
       aria-haspopup="listbox"
       :aria-expanded="open.toString()"
       :aria-controls="'dropdown-menu'"
       :aria-label="accessLabel"
     >
-      {{ placeholder || displayLabel }}
+      {{ displayLabel ? displayLabel : placeholder }}
       <svg
         viewBox="0 0 20 20"
         fill="currentColor"
@@ -41,13 +39,13 @@
         <li
           v-if="defaultOption"
           ref="firstItem"
-          class="px-4 py-2 text-sm text-gray-200 cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
+          class="px-4 py-2 text-sm text-gray-200 bg-black cursor-pointer hover:bg-white/5 hover:text-white focus:bg-white/5 focus:text-white focus:outline-none"
           role="option"
           tabindex="0"
           @click="emitSelectedOption('')"
           @keydown.enter.prevent="emitSelectedOption('')"
           @keydown.space.prevent="emitSelectedOption('')"
-          @keydown.esc.exact.prevent="hideDropdown"
+          @keydown.esc.exact.prevent="toggleVisibility"
           @keydown.down.prevent="focusNextItem"
           @keydown.up.prevent="focusPreviousItem"
         >
@@ -63,10 +61,10 @@
           @click="emitSelectedOption(option)"
           @keydown.enter.prevent="emitSelectedOption(option)"
           @keydown.space.prevent="emitSelectedOption(option)"
-          @keydown.esc.exact.prevent="hideDropdown"
+          @keydown.esc.exact.prevent="toggleVisibility"
           @keydown.down.prevent="focusNextItem"
           @keydown.up.prevent="focusPreviousItem"
-          @keydown.tab.exact="index === dropdownOptions.length - 1 ? hideDropdown() : null"
+          @keydown.tab.exact="index === dropdownOptions.length - 1 ? toggleVisibility() : null"
         >
           {{ option }}
         </li>
@@ -105,13 +103,7 @@ const dropdown = ref(null)
 const firstItem = ref(null)
 const dropdownList = ref(null)
 
-// shows me selected value or placeholder - DEfault Option
-const displayLabel = computed(() => {
-  if (props.modelValue === '' || !props.modelValue) {
-    return props.defaultOption || props.placeholder
-  }
-  return props.modelValue
-})
+const displayLabel = computed(() => props.modelValue ?? props.defaultOption ?? props.placeholder)
 
 // Toggle dropdown visibility
 const toggleVisibility = () => {
@@ -124,25 +116,17 @@ const toggleVisibility = () => {
   }
 }
 
-// Hide dropdown especially on Escape and Shift+Tab on the last item
-const hideDropdown = () => {
-  open.value = false
-}
-
-// Start arrow key navigation
-const startArrowKeys = () => {
-  if (!open.value) {
-    open.value = true
-    nextTick(() => {
-      firstItem.value?.focus()
-    })
-  } else {
-    firstItem.value?.focus()
-  }
-}
-
 // focus next and previous items
 const focusNextItem = (event) => {
+  const current = event.target
+  const listItems = dropdown.value.querySelectorAll('li')
+
+  // if we're the last item, go to the first @keydown-down
+  if (current === listItems[listItems.length - 1]) {
+    listItems[0]?.focus()
+    return
+  }
+
   const nextElement = event.target.nextElementSibling
   if (nextElement && nextElement.tagName === 'LI') {
     nextElement.focus()
@@ -150,6 +134,15 @@ const focusNextItem = (event) => {
 }
 
 const focusPreviousItem = (event) => {
+  const current = event.target
+
+  // If i'm on' first item, loop back to the last on @keydown-up
+  if (current === firstItem.value) {
+    const listItems = dropdown.value.querySelectorAll('li')
+    const lastItem = listItems[listItems.length - 1]
+    lastItem?.focus()
+    return
+  }
   const prevElement = event.target.previousElementSibling
   if (prevElement && prevElement.tagName === 'LI') {
     prevElement.focus()
@@ -161,41 +154,20 @@ const handleClickOutside = (event) => {
     open.value = false
   }
 }
+
 // Emit selected category and close dropdown
 const emitSelectedOption = (value) => {
   emit('update:modelValue', value)
-  open.value = false
-}
-// get selected label
-// const selectedLabel = computed(() =>
-//   props.modelValue === '' ? 'All Categories' : props.modelValue,
-// )
-// Escape key to handel close dropdown
-function handleKey(e) {
-  if (!open.value) return
-
-  if (e.key === 'Escape') {
-    open.value = false
-  }
+  toggleVisibility()
 }
 
-// Auto-focus first item when dropdown opens
-watch(open, (newVal) => {
-  if (newVal) {
-    nextTick(() => {
-      firstItem.value?.focus()
-    })
-  }
-})
 // Add and remove event listeners of keydown and clickOutside
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  document.addEventListener('keydown', handleKey)
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
-  document.removeEventListener('keydown', handleKey)
 })
 </script>
 

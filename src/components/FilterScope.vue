@@ -1,9 +1,6 @@
 <template>
   <section>
-    <fieldset
-      aria-label="Produktfilter"
-      class="flex items-center flex-col p-2 md:p-4 md:py-8 mb-1 bg-black/15 backdrop-blur-lg"
-    >
+    <fieldset aria-label="Produktfilter" class="flex items-center flex-col p-2 md:p-4 md:py-8 mb-1">
       <!-- class="flex items-center m-4 flex-col space-y-4 p-2 md:p-4 mb-6 bg-black/5 backdrop-blur-lg" -->
 
       <div class="w-full sm:w-8/10 md:w-[35rem]">
@@ -14,7 +11,7 @@
       >
         <Categories :categories="categories" v-model="selectedCategory" />
         <PriceSort v-model="selectedSort" />
-        <StockFilter v-model="stockAvailable" label="Nur verfügbare Produkte" />
+        <StockFilter v-model="stockAvailability" />
       </div>
       <ResetFilter @reset="handleReset" />
     </fieldset>
@@ -24,7 +21,7 @@
     <ul
       role="list"
       tabindex="0"
-      class="grid gap-2 p-2 md:p-4 grid-cols-2 lg:mx-[5rem] md:grid-cols-3 xl:grid-cols-4 xl:col-span-2"
+      class="grid gap-2 p-2 md:p-4 lg:mx-[5rem] grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xl:col-span-2"
     >
       <ProductListItem
         v-for="product in filteredAndSortedProducts"
@@ -48,12 +45,11 @@ import ResetFilter from '@/components/filter/ResetFilter.vue'
 const productStore = useProductStore()
 
 onMounted(() => {
-  // Redundant - not a real API call
-  if (typeof productStore.fetchProducts === 'function') {
-    productStore.fetchProducts()
-
-    return
-  }
+  // Redundant - not a real API call but yea
+  // if (typeof productStore.fetchProducts === 'function') {
+  //   productStore.fetchProducts()
+  //   return
+  // }
 })
 
 const products = productStore.products
@@ -61,7 +57,7 @@ const products = productStore.products
 // reactive filter states
 const searchQuery = ref('')
 const selectedCategory = ref('')
-const stockAvailable = ref('')
+const stockAvailability = ref('')
 const selectedSort = ref('')
 
 const filteredAndSortedProducts = computed(() => {
@@ -73,11 +69,11 @@ const filteredAndSortedProducts = computed(() => {
     const namesFilter = p.name.toLowerCase().includes(query)
     const categoryFilter = category ? p.category === category : true
 
-    // a chain of ternary operators to handle the three states of stockAvailable -> '', 'true', 'false'
+    // a chain of ternary operators to handle the three states of stockAvailability -> '', 'true', 'false'
     const inStockFilter =
-      stockAvailable.value === ''
+      stockAvailability.value === ''
         ? true
-        : stockAvailable.value === 'true'
+        : stockAvailability.value === 'true'
           ? p.inStock === true
           : p.inStock === false
 
@@ -96,7 +92,7 @@ const categories = computed(() => {
 const handleReset = () => {
   searchQuery.value = ''
   selectedCategory.value = ''
-  stockAvailable.value = ''
+  stockAvailability.value = ''
   selectedSort.value = ''
 }
 </script>

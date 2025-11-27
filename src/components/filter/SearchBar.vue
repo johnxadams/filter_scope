@@ -18,8 +18,8 @@
       type="text"
       :value="modelValue"
       @input="handleInput"
-      placeholder="Search for name..."
       class="mt-1 block w-full text-sm p-3 border-gray-300 shadow-sm outline-none placeholder-gray-600 text-white focus:border-white-300 focus:bg-black/20 focus-visible:white-300 focus-visible:shadow-md transition-all duration-200"
+      placeholder="Suche Produktname..."
       aria-label="Produkt nach Namen suchen"
       role="searchbox"
     />
