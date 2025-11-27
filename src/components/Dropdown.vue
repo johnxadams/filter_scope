@@ -6,7 +6,7 @@
       @keydown.esc.exact.prevent="toggleVisibility"
       @keydown.shift.tab="toggleVisibility"
       type="button"
-      class="inline-flex w-full justify-between items-center gap-x-1.5 bg-black/30 px-4 py-2 text-sm font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/45 cursor-pointer transition-colors"
+      class="inline-flex w-full md:w-[13rem] justify-between items-center gap-x-1.5 bg-black/30 px-4 py-2 text-sm font-normal text-white inset-ring-1 inset-ring-white/5 hover:bg-black/45 cursor-pointer transition-colors"
       aria-haspopup="listbox"
       :aria-expanded="open.toString()"
       :aria-controls="'dropdown-menu'"
