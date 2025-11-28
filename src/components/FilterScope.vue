@@ -33,7 +33,9 @@
 </template>
 <script setup>
 import { onMounted, computed, ref } from 'vue'
-import { useProductStore } from '@/stores/productStore.js'
+import productsData from '@/assets/products.json'
+
+// import { useProductStore } from '@/stores/productStore.js'
 import { sortProductsByPrice } from '@/utils/sortProductsHelper.js'
 import ProductListItem from './ProductListItem.vue'
 import SearchBar from '@/components/filter/SearchBar.vue'
@@ -42,17 +44,10 @@ import PriceSort from '@/components/filter/PriceSort.vue'
 import StockFilter from '@/components/filter/StockFilter.vue'
 import ResetFilter from '@/components/filter/ResetFilter.vue'
 
-const productStore = useProductStore()
+// const productStore = useProductStore()
+// const products = productStore.products
 
-onMounted(() => {
-  // Redundant - not a real API call but yea
-  // if (typeof productStore.fetchProducts === 'function') {
-  //   productStore.fetchProducts()
-  //   return
-  // }
-})
-
-const products = productStore.products
+const products = productsData
 
 // reactive filter states
 const searchQuery = ref('')
@@ -86,7 +81,8 @@ const filteredAndSortedProducts = computed(() => {
 
 const categories = computed(() => {
   // make unique list of categories from products
-  return [...new Set(productStore.products.map((p) => p.category))]
+  // return [...new Set(productStore.products.map((p) => p.category))]
+  return [...new Set(products.map((p) => p.category))]
 })
 
 const handleReset = () => {
