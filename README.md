@@ -8,9 +8,9 @@
 
 - Where everything comes together
 
-### 1. `productStore.products`
+### 1. `const products = productsData`
 
-- lokaleJSON Data mit dem PiniaStore fetchen, im FilterScope importieren und anwenden
+- lokaleJSON Data fetchen, im FilterScope importieren und als `products` weiterverwenden
 
 ### 2. `filteredAndSortedProducts()`
 
