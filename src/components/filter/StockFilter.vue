@@ -14,7 +14,7 @@
         modelValue === option.value ? 'bg-black/50' : 'bg-black/30',
       ]"
       role="radio"
-      :aria-checked="selected === option.value"
+      :aria-checked="modelValue === option.value"
     >
       <span class="sr-only">Lagerbestand Anzeigen: </span>
       {{ option.label }}
