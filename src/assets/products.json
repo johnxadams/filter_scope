@@ -68,5 +68,75 @@
     "price": 129.99,
     "category": "Gadgets",
     "inStock": true
+  },
+  {
+    "id": 11,
+    "name": "Nebula VR Headset",
+    "price": 499.99,
+    "category": "Gadgets",
+    "inStock": true
+  },
+  {
+    "id": 12,
+    "name": "Cosmic Air Purifier",
+    "price": 219.95,
+    "category": "Home",
+    "inStock": true
+  },
+  {
+    "id": 13,
+    "name": "Orbit Wireless Gaming Mouse",
+    "price": 79.99,
+    "category": "Gadgets",
+    "inStock": false
+  },
+  {
+    "id": 14,
+    "name": "Stellar Smart Thermostat",
+    "price": 189.5,
+    "category": "Home",
+    "inStock": true
+  },
+  {
+    "id": 15,
+    "name": "Quasar ANC Headphones",
+    "price": 279,
+    "category": "Audio",
+    "inStock": true
+  },
+  {
+    "id": 16,
+    "name": "Asteroid Fitness Tracker",
+    "price": 129.95,
+    "category": "Wearables",
+    "inStock": false
+  },
+  {
+    "id": 17,
+    "name": "Eclipse Mini Projector",
+    "price": 349.99,
+    "category": "Gadgets",
+    "inStock": true
+  },
+  {
+    "id": 18,
+    "name": "Photon RGB Desk Mat",
+    "price": 39.99,
+    "category": "Home",
+    "inStock": true
+  },
+  {
+    "id": 19,
+    "name": "SolarSync Power Bank",
+    "price": 59.95,
+    "category": "Gadgets",
+    "inStock": true
+  },
+  {
+    "id": 20,
+    "name": "AstroSound Studio Microphone",
+    "price": 199.99,
+    "category": "Audio",
+    "inStock": true
   }
 ]

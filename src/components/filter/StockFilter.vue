@@ -23,14 +23,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
 const props = defineProps({
   modelValue: String,
 })
 const emit = defineEmits(['update:modelValue'])
-
-const selected = ref(props.modelValue || '')
 
 const options = [
   { value: '', label: 'Alle Produkte' },

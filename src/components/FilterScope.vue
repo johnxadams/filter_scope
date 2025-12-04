@@ -27,16 +27,15 @@
         v-for="product in filteredAndSortedProducts"
         :key="product.id"
         :product="product"
+        ref="productCardRefs"
       />
     </ul>
   </section>
 </template>
 <script setup>
-import { onMounted, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import productsData from '@/assets/products.json'
 
-// import { useProductStore } from '@/stores/productStore.js'
-import { sortProductsByPrice } from '@/utils/sortProductsHelper.js'
 import ProductListItem from './ProductListItem.vue'
 import SearchBar from '@/components/filter/SearchBar.vue'
 import Categories from '@/components/filter/Categories.vue'
@@ -44,10 +43,11 @@ import PriceSort from '@/components/filter/PriceSort.vue'
 import StockFilter from '@/components/filter/StockFilter.vue'
 import ResetFilter from '@/components/filter/ResetFilter.vue'
 
-// const productStore = useProductStore()
-// const products = productStore.products
+import { sortProductsByPrice } from '@/utils/sortProductsHelper.js'
+import { useIntersectionObserver } from '@/composables/useIntersectionObserver.js'
 
 const products = productsData
+const productCardRefs = ref([])
 
 // reactive filter states
 const searchQuery = ref('')
@@ -81,9 +81,11 @@ const filteredAndSortedProducts = computed(() => {
 
 const categories = computed(() => {
   // make unique list of categories from products
-  // return [...new Set(productStore.products.map((p) => p.category))]
+
   return [...new Set(products.map((p) => p.category))]
 })
+
+useIntersectionObserver(productCardRefs)
 
 const handleReset = () => {
   searchQuery.value = ''
