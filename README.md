@@ -39,6 +39,125 @@
 
 - In handleReset werden alle Filterwerte auf ihre Defaults bzw. emptyString zurückgesetzt
 
+### 5. `useIntersectionObserver()`
+
+**Grundprinzip:**
+<br>
+Mit dem Intersection Observer überwachen wir, wann ein DOM-Element in den Viewport (oder einen definierten Bereich) eintritt oder in verlässt. in unserm Fall ist es der `<article ref="cardRef">` - Es wird eine callback-fn ausgeführt um Inhalte nachzuladen und Sichtbarkeit zu tracken.
+
+**FilterScope.vue** (Parent-Component)<br>
+**ProductListItem.vue** (Child-Component)<br>
+**useIntersectionObserver.js** (composable)
+
+Im _`Child-ProductListItem`_ wird eine Exposed Ref auf das `<article>` Element für den Parent. wie folgt:
+
+```
+template:
+<article ref="cardRef">
+
+script:
+const cardRef = ref(null)
+
+defineExpose({
+  cardRef,
+})
+```
+
+<br>
+
+Im _`Parent-FilterScope`_ wird die `cardRef` eines jeden Child-Elements in productCardRefs gespeichert. Dieses productCardRefs-Array wird dann als Argument an useIntersectionObserver übergeben.
+
+```
+template:
+  <ProductListItem
+        v-for="product in filteredAndSortedProducts"
+        :key="product.id"
+        :product="product"
+        ref="productCardRefs"  <----------
+      />
+
+script:
+import { useIntersectionObserver } from '@/composables/useIntersectionObserver.js'
+
+useIntersectionObserver(productCardRefs)
+
+```
+
+### useIntersectionObserver.js comsposable
+
+In diesem composable sich die eigentliche funktionalität der Intersection Observer:
+
+1. Import von vue werden: onMounted, onUpdated, onUnmounted, nextTick
+2. `export function useIntersectionObserver` mit 3 parameter
+   - itemRefs - entpricht dem productCardRefs
+   - Und 2 Default parameter: options(threshold, rootMargin) und animateClass['array', 'aus', 'classes']
+3. Observer Instanz - mit der callback initialisiert in onMounted
+   - `observer = new IntersectionObserver((entries) => {})`
+   - entries -> Array von `Intersection_Observer_Entry` Objecten
+   - entry.Intersecting -> prüft ob das Element sichtbar ist
+   - animation hinzufügen/entfernen
+   - Element anschließend nicht weiter beobachten (`observer.unobserve(entry.target)`)
+   - als zweites Argument kommen die options rein: welches `threshold & rootMargin` beinhaltet
+   - im anschluss wird observeItems() ausgeführt
+4. observeItems - beobachtet Alle Elemente
+   - await nextTick() wartet bis die DOM-Elemente fertig gerendert sich
+   - Die eizenlenen cardRef die von dem childComponent ausgehen und sich in einer Array(itemRefs) sammeln, werden mithilfe von forEach in `elementRef`gespeichert
+   - Die observer Instanz, geht jede einzelne `elementRef` durch
+
+   Der Lifecycle ist wie folgt:
+
+   ```
+   onMounted(() => observeItems()) -> Startet Beobachtung beim ersten Render
+   onUpdated(() => observeItems()) -> beobachtet neue Elemente die zB bei Filterung/Sortierung erscheinen/verschwinden
+   onUnmounted(() => observer?.disconnect()) -> Vermeidet memoryleaks
+   ```
+
+```js
+import { onMounted, onUpdated, onUnmounted, nextTick } from 'vue'
+
+export function useIntersectionObserver(
+  itemRefs,
+  // default options:threshold  triggers when 50% of the element is visible, rootMargin ensures early loading at 400px
+  // the rootMargin macht derzeit dass wir die animation nicht vernehmen
+  options = { threshold: 0.5, rootMargin: '400px' },
+  animateClasses = ['animate-fadeInUp', 'text-red-700'],
+) {
+  let observer = null
+
+  const observeItems = async () => {
+    await nextTick()
+    itemRefs.value.forEach((comp) => {
+      const elementRef = comp?.cardRef
+      if (!elementRef) return
+      observer.observe(elementRef)
+    })
+  }
+
+  onMounted(() => {
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+
+        entry.target.classList.add(...animateClasses)
+        entry.target.classList.remove('opacity-0')
+
+        observer.unobserve(entry.target)
+      })
+    }, options)
+
+    observeItems()
+  })
+
+  onUpdated(() => {
+    observeItems()
+  })
+
+  onUnmounted(() => {
+    observer?.disconnect()
+  })
+}
+```
+
 ## ProductListeItem.vue
 
 - Empfange product als props und Rendere jede einzelne Card
