@@ -1,8 +1,9 @@
 <template>
   <li role="listitem">
     <article
-      class="article-aspect flex aspect-[4/3] flex-col bg-white/20 gap-x-6 border-gray-600 p-2 pt-1 inset-ring inset-ring-gray-800/20 z-0"
+      class="article-aspect flex aspect-[4/3] flex-col bg-white/20 gap-x-6 p-2 pt-1 inset-ring inset-ring-gray-800/20 z-0 opacity-0 transition-all duration-700"
       tabindex="0"
+      ref="cardRef"
     >
       <div class="h-6 flex items-end justify-end">
         <span
@@ -31,11 +32,19 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 defineProps({
   product: {
     type: Object,
     required: true,
   },
+})
+
+const cardRef = ref(null)
+
+// defineExpose to allow parent components to access the cardRef
+defineExpose({
+  cardRef,
 })
 </script>
 
