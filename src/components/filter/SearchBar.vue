@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import { onBeforeUnmount } from 'vue'
 const props = defineProps({
   modelValue: String,
 })
@@ -42,4 +43,7 @@ const handleInput = (event) => {
     emit('update:modelValue', event.target.value)
   }, 220)
 }
+onBeforeUnmount(() => {
+  if (timeout) clearTimeout(timeout)
+})
 </script>
